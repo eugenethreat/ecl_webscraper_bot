@@ -34,5 +34,5 @@ Follow this link [here](https://support.google.com/accounts/answer/185833?visit_
 Run the job by typing this in the terminal:
 
 ```bash
-python main.py
+python3 main.py
 ```
