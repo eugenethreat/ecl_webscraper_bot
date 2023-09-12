@@ -14,10 +14,10 @@ python3 -m venv myenv
 
 ### YAML File
 
-Create a yaml file in the same directory as the python file. The yaml file should look like this:
+Create a yaml file named secrets.yaml in the same directory as the python file. The yaml file should look like this:
 
 ```yaml
-# Email details
+# secrets.yaml
 sender_email: "sender_email@gmail.com"
 sender_password: "app_password"
 recipient_email: "recipient_email@gmail.com"
