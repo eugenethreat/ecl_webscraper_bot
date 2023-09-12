@@ -18,9 +18,9 @@ Create a yaml file in the same directory as the python file. The yaml file shoul
 
 ```yaml
 # Email details
-sender_email: "email@gmail.com"
+sender_email: "sender_email@gmail.com"
 sender_password: "app_password"
-recipient_email: "hryoo2004@gmail.com"
+recipient_email: "recipient_email@gmail.com"
 ```
 
 The app password is separate from your normal google account password and is generated like so:
