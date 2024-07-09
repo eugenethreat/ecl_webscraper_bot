@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 
 def main():
-    virtualenv_path = os.getcwd() + "\myenv"
+    virtualenv_path = os.getcwd() + "\my_venv"
     logging.debug(virtualenv_path)
     # List of Python scripts to run
     scripts_to_run = [
@@ -37,15 +37,20 @@ def main():
     else:
         logging.info("Packages have been successfully installed from requirements.txt")
 
+    err = False
     # Iterate through the list and run each script
     for script in scripts_to_run:
         try:
             subprocess.run(["python", script], check=True)
         except subprocess.CalledProcessError as e:
+            err = True
             logging.error(f"Error running {script}: {e}")
         else:
             logging.info(f"{script} has been successfully executed.")
-    logging.info("All scripts have been successfully executed.")
+    if(err):
+        logging.info("Execution finished. Some errors occured.")
+    else:
+        logging.info("All scripts have been successfully executed!")
 
 if __name__ == '__main__':
     main()

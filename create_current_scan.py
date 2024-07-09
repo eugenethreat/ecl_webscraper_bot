@@ -40,10 +40,11 @@ def write_current_scan_entry_to_json(url_list):
 
 def get_webpage_text(url):
     # Send an HTTP GET request to the URL
-    response = requests.get(url)
+    response = requests.get(url, allow_redirects=True)
 
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
+        logging.info(f'@create_current_scan | Successfully fetched text for {url}')
         # Parse the HTML content of the webpage using BeautifulSoup
         soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -56,7 +57,7 @@ def get_webpage_text(url):
         # Print or process the extracted text
         return all_text_clean
     else:
-        logging.error(f"Failed to retrieve the webpage. Status code: {response.status_code}")
+        logging.error(f"Failed to retrieve {url} - Status code: {response.status_code}")
         return None
 
 if __name__ == '__main__':

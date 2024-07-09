@@ -57,16 +57,24 @@ def write_to_report_file(previous_dict, current_dict):
             title = get_website_title(url)
             if is_website_changed and not is_any_website_changed:
                 is_any_website_changed = True
-            writer.writerow({'name': title, 'url': url, 'is_changed': is_website_changed})
+            
+            # define text to write to report 
+            # if a bool, write a bool; otherwise there was an error.
+            if (is_website_changed == True or is_website_changed == False):
+                text = is_website_changed
+            else:
+                text = 'Error fetching web results'
+            writer.writerow({'name': title, 'url': url, 'is_changed': text})
             logging.info(f'Wrote {title} to report.csv.')
     logging.info('Wrote report to report.csv.')
     return is_any_website_changed
 
 def get_website_title(url):
-    response = requests.get(url)
+    response = requests.get(url, allow_redirects=True)
 
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
+        logging.info(f'@compare_previous_to_current | Successfully fetched text for {url}')
         # Parse the HTML content of the webpage using BeautifulSoup
         soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -85,8 +93,13 @@ def get_website_title(url):
         return 'No title'
 
 def is_changed(previous_dict_entry_list, current_dict_entry_list):
-    previous_set = set(previous_dict_entry_list)
-    current_set = set(current_dict_entry_list)
+    try:
+        previous_set = set(previous_dict_entry_list)
+        current_set = set(current_dict_entry_list)
+    except Exception as e:
+        # If contents of either
+        # return none so this evals to false; handle writing case in write_to_report_file
+        return None
     if previous_set == current_set:
         return False
     else:
